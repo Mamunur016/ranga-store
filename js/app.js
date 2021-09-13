@@ -5,13 +5,20 @@ const loadProducts = () => {
     .then((data) => showProducts(data));
 };
 loadProducts();
-// const productDetails(id) =>{
-//   const url= `https://fakestoreapi.com/products/${id}`;
-//   fetch(url)
-//     .then((response) => response.json())
-//     .then((data) => showProducts(data));
 
-// }
+const loadProductDetail = id => {
+  const url = `https://fakestoreapi.com/products/${id}`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => displayProductDetail(data));
+
+}
+const displayProductDetail = product => {
+  console.log(product);
+
+
+}
+
 
 // show all product in UI 
 const showProducts = (products) => {
@@ -21,16 +28,28 @@ const showProducts = (products) => {
     const image = product.image;
     const div = document.createElement("div");
     div.classList.add("product");
-    div.innerHTML = `<div class="single-product">
-      <div>
-    <img class="product-image" src=${image}></img>
-      </div>
-      <h3>${product.title}</h3>
+    div.innerHTML = `
+    <div class="single-product card h-100">
+    <div>
+     <img class="product-image" src=${image}></img>
+    </div>
+    <div class="card-body">
+      <h4>${product.title}</h4>
       <p>Category: ${product.category}</p>
-      <p> ${product.rating.rate}  ${product.rating.count} </p>
+      <h5>Reviews: ${product.rating.count} </h5>
+      <h5>Ratings: ${product.rating.rate} </h5>
       <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button onclick="productDetails(${product.id})" id="details-btn" class="btn btn-danger">Details</button></div>
+    </div>
+    <div class="card-footer border-0 bg-white d-flex">
+      <div ><button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success me-3">add to cart</button>
+      </div>
+      <div> <button onclick="loadProductDetail(${product.id})" id="details-btn" class="btn btn-danger ms-3" >Details</button>
+      </div>
+     
+    </div>
+
+
+</div>
       `;
     document.getElementById("all-products").appendChild(div);
   }

@@ -31,8 +31,9 @@ body {
   margin-left: 20px;
 }
 .search-button:hover{
-  border: 1px solid #e76f51;;
-  background: #E76F51;
+  border: 1px solid blueviolet;;
+  background: blueviolet;
+  transition:background-color .8s; 
   color:white;
 }
 
@@ -51,15 +52,17 @@ body {
 
 /* .single-product section */
 .single-product {
-  box-shadow: 4px 4px 7px gray;
-  min-height: 550px;
+  box-shadow: 4px 4px 7px dimgray;
+  min-height: 575px;
   padding: 10px;
   transition: 0.6s;
 }
 .single-product:hover {
-  box-shadow: 4px 4px 7px gray;
+  /* box-shadow: 4px 4px 7px darkseagreen; */
+  box-shadow: 4px 4px 7px darkslategrey;
   border-radius: 10px;
-  border: 1px solid cyan;
+  border: 1px solid blueviolet;
+  /* border: 1px solid cyan; */
 }
 .product-image {
   width: 150px;
