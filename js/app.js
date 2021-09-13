@@ -15,6 +15,7 @@ loadProducts();
 
 // show all product in UI 
 const showProducts = (products) => {
+  console.log(products);
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
     const image = product.image;
@@ -26,6 +27,7 @@ const showProducts = (products) => {
       </div>
       <h3>${product.title}</h3>
       <p>Category: ${product.category}</p>
+      <p> ${product.rating.rate}  ${product.rating.count} </p>
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
       <button onclick="productDetails(${product.id})" id="details-btn" class="btn btn-danger">Details</button></div>
@@ -34,6 +36,7 @@ const showProducts = (products) => {
   }
 };
 
+// addToCart function
 let count = 0;
 const addToCart = (id, price) => {
   count = count + 1;
@@ -44,6 +47,7 @@ const addToCart = (id, price) => {
   updateTotal();
 };
 
+// getInputValue function
 const getInputValue = (id) => {
   const element = document.getElementById(id).innerText;
   const converted = parseFloat(element);
@@ -87,5 +91,5 @@ const updateTotal = () => {
   const grandTotal =
     `${getInputValue("price") + getInputValue("delivery-charge") +
     getInputValue("total-tax")}`;
-  document.getElementById("total").innerText = grandTotal;
+  document.getElementById("total").innerText = parseFloat(grandTotal).toFixed(2);
 };
