@@ -54,7 +54,7 @@ body {
 .single-product {
   box-shadow: 4px 4px 7px dimgray;
   min-height: 575px;
-  padding: 10px;
+  padding: 10px 0;
   transition: 0.6s;
 }
 .single-product:hover {
@@ -67,6 +67,17 @@ body {
 .product-image {
   width: 150px;
   height: 150px;
+}
+
+/* star design */
+.fa-star {
+  font-size: 12px;
+}
+.fa-star.filled {
+  color: #FFC014;
+}
+.fa-star.empty {
+  color: #aeaeae;
 }
 /* .cart section */
 .cart {

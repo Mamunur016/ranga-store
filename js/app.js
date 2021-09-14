@@ -1,3 +1,5 @@
+
+// loadProducts function
 const loadProducts = () => {
   const url = `https://fakestoreapi.com/products`;
   fetch(url)
@@ -6,23 +8,37 @@ const loadProducts = () => {
 };
 loadProducts();
 
-const loadProductDetail = id => {
+
+// loadProductDetail function
+const loadProductDetail = (id) => {
   const url = `https://fakestoreapi.com/products/${id}`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => displayProductDetail(data));
 
 }
-const displayProductDetail = product => {
-  console.log(product);
 
-
+// displayProductDetail function
+const displayProductDetail = (product) => {
+  document.getElementById("details").textContent = "";
+  const div = document.createElement("div");
+  div.innerHTML = `
+    <div class=" bg-light p-5">
+      <h3> Product details:  </h3>
+      <p>${product.description}</p>
+  </div>
+  `;
+  document.getElementById("details").appendChild(div);
+  document.getElementById("my-cart").style.width = "300px";
+  document.getElementById("my-cart").style.position = "fixed";
+  // document.getElementById("my-cart").style.right = "0px";
+  document.getElementById("my-cart").style.top = "110px";
 }
 
 
 // show all product in UI 
 const showProducts = (products) => {
-  console.log(products);
+
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
     const image = product.image;
@@ -37,13 +53,17 @@ const showProducts = (products) => {
       <h4>${product.title}</h4>
       <p>Category: ${product.category}</p>
       <h5>Reviews: ${product.rating.count} </h5>
-      <h5>Ratings: ${product.rating.rate} </h5>
-      <h2>Price: $ ${product.price}</h2>
+      <h5>Rating:<span id="${product.id}"></span><span class="">(${product.rating.rate})</h5>
+      <h4>Price: $ ${product.price}</h4>
     </div>
     <div class="card-footer border-0 bg-white d-flex">
       <div ><button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success me-3">add to cart</button>
       </div>
-      <div> <button onclick="loadProductDetail(${product.id})" id="details-btn" class="btn btn-danger ms-3" >Details</button>
+      <div> 
+
+   
+        <button  id="details-btn" class="btn btn-danger ms-3"onclick="loadProductDetail(${product.id})">Details</button>
+
       </div>
      
     </div>
@@ -52,12 +72,37 @@ const showProducts = (products) => {
 </div>
       `;
     document.getElementById("all-products").appendChild(div);
+    dynamicRating(product.id, product.rating.rate)
   }
 };
+
+//  dynamic stars function
+
+const dynamicRating = (ratingId, stars) => {
+  let star = Math.floor(stars);
+  let i = parseInt(ratingId);
+  if (star === 1) {
+    document.getElementById(i).innerHTML = '<i class="fas fa-star filled"></i><i class="fas fa-star empty"></i><i class="fas fa-star empty"></i><i class="fas fa-star empty"></i><i class="fas fa-star empty"></i>';
+  }
+  else if (star === 2) {
+    document.getElementById(i).innerHTML = '<i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star empty"></i><i class="fas fa-star empty"></i><i class="fas fa-star empty"></i>';
+  }
+  else if (star === 3) {
+    document.getElementById(i).innerHTML = '<i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star empty"></i><i class="fas fa-star empty"></i>';
+  }
+  else if (star === 4) {
+    document.getElementById(i).innerHTML = '<i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star empty"></i>';
+  }
+  else if (star === 5) {
+    document.getElementById(i).innerHTML = '<i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star filled"></i><i class="fas fa-star filled"></i>';
+  }
+}
 
 // addToCart function
 let count = 0;
 const addToCart = (id, price) => {
+  document.getElementById("details").textContent = "";
+
   count = count + 1;
   updatePrice("price", price);
 
